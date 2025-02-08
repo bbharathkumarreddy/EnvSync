@@ -1,0 +1,24 @@
+name: 'EnvSync'
+description: 'A tool to securely sync and load all environment variables and secrets into GitHub Actions, ensuring they are available during runtime.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Load all GitHub Secrets and Variables
+      run: |
+        echo "Loading GitHub Secrets..."
+
+        # Loop through all environment variables starting with 'GITHUB_' and load them securely
+        for secret in $(printenv | grep -oP 'GITHUB_.*' | cut -d= -f1); do
+          # Securely load the secret value into GitHub Actions environment
+          echo "$secret=${{ secrets.${secret} }}" >> $GITHUB_ENV
+        done
+
+        # Loop through repository variables starting with 'VAR_' and load them securely
+        for var in $(printenv | grep -oP '^VAR_.*' | cut -d= -f1); do
+          # Securely load the variable value into GitHub Actions environment
+          echo "$var=${{ vars.${var} }}" >> $GITHUB_ENV
+        done

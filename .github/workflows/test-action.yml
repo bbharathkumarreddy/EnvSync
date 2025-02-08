@@ -1,0 +1,22 @@
+name: Test EnvSync Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-envsync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Load Secrets and Variables using EnvSync
+        uses: ./action.yml  # Reference the action from the root of the repository
+
+      - name: Check loaded environment variables
+        run: |
+          echo "Checking environment variables..."
+          printenv
