@@ -11,15 +11,15 @@ runs:
       run: |
         echo "Loading environment variables..."
 
-        # Define an array of secrets manually (replace with actual secrets you want to load)
-        declare -a secrets=("TEST_SECRET" "TEST_USERNAME")
+        # Manually list secrets (replace with actual secret names)
+        echo "TEST_SECRET=${{ secrets.DEV_HOST_USERNAME }}" >> $GITHUB_ENV
+        echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
+        echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
 
-        # Iterate over the list of secrets and load them into $GITHUB_ENV
-        for secret in "${secrets[@]}"; do
-          echo "$secret=${{ secrets[${secret}] }}" >> $GITHUB_ENV
-        done
+        # Optionally load other environment variables here if needed
+        echo "MY_ENV_VAR=${{ vars.MY_ENV_VAR }}" >> $GITHUB_ENV
 
-        echo "All secrets have been loaded into environment variables."
+        echo "All secrets and environment variables have been loaded into GitHub Actions."
 
       shell: bash
 
