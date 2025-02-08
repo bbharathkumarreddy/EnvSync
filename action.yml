@@ -5,6 +5,7 @@ runs:
   using: "composite"
   steps:
     - name: Export GitHub Secrets and Variables
+      shell: bash
       run: |
         echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
         echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
