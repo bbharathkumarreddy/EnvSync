@@ -13,8 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Before loading environment variables
+        run: |
+          echo "Checking current environment variables..."
+          printenv
+
       - name: Load Secrets and Variables using EnvSync
-        uses: ./action.yml  # Reference the action from the root of the repository
+        uses: ./  # Reference the action from the root of the repository
 
       - name: Check loaded environment variables
         run: |
