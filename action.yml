@@ -7,26 +7,25 @@ runs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Dynamically load environment variables
+    - name: Load Environment Variables and Secrets
       run: |
-        echo "Loading all environment variables..."
+        echo "Loading environment variables..."
 
-        # List of known secrets
-        declare -a secrets=("TEST_SECRET" "TEST_USERNAME" "MY_ENV")
+        # Define an array of secrets manually (replace with actual secrets you want to load)
+        declare -a secrets=("TEST_SECRET" "TEST_USERNAME")
 
-        # Loop through the known secrets and load them into GitHub Actions environment
+        # Iterate over the list of secrets and load them into $GITHUB_ENV
         for secret in "${secrets[@]}"; do
-          if [[ -n "${{ secrets[$secret] }}" ]]; then
-            echo "$secret=${{ secrets[$secret] }}" >> $GITHUB_ENV
-          else
-            echo "$secret=Variable not found" >> $GITHUB_ENV
-          fi
+          echo "$secret=${{ secrets[${secret}] }}" >> $GITHUB_ENV
         done
+
+        echo "All secrets have been loaded into environment variables."
 
       shell: bash
 
     - name: Verify Loaded Variables
       run: |
-        echo "The environment variables are:"
-        printenv  # Print all environment variables to verify they were set
+        echo "The loaded environment variables are:"
+        printenv  # This will display all environment variables to verify they were set
+
       shell: bash
