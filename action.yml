@@ -7,16 +7,11 @@ runs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Load Environment Variables and Secrets
+    - name: Export GitHub Secrets and Variablesssss
       run: |
-        echo "Loading environment variables..."
-
-        echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
         echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
         echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
         echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
-
-        echo "All secrets and environment variables have been loaded into GitHub Actions."
 
     - name: Verify Loaded Variables
       run: |
