@@ -31,8 +31,7 @@ jobs:
             echo "$var=${{ env.${var} }}" >> $GITHUB_ENV
           done
 
-      - name: Check loaded environment variables
+      - name: Verify Loaded Variables
         run: |
-          echo "Checking environment variables..."
-          printenv
-        shell: bash  # Use bash as the shell for running the script
+          echo "The environment variables are:"
+          printenv  # Print all environment variables to verify they were set
