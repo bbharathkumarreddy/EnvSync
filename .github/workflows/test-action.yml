@@ -25,12 +25,6 @@ jobs:
         run: |
           echo "Loading all GitHub secrets and variables dynamically..."
 
-          # Loop through all secrets and export them
-          for secret in $(printenv | grep -oP 'GITHUB_.*' | cut -d= -f1); do
-            echo "Exporting secret: $secret"
-            echo "$secret=${{ secrets[$secret] }}" >> $GITHUB_ENV
-          done
-
           # Loop through all variables and export them
           for var in $(printenv | grep -oP 'VAR_.*' | cut -d= -f1); do
             echo "Exporting variable: $var"
