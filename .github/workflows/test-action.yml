@@ -18,14 +18,24 @@ jobs:
           echo "Checking current environment variables..."
           printenv
 
-      - name: Load Secrets and Variables using EnvSync
-        uses: ./ # Reference the action from the root of the repository
+      # - name: Load Secrets and Variables using EnvSync
+      #   uses: ./ # Reference the action from the root of the repository
 
-      # - name: Export GitHub Secrets and Variables
-      #   run: |
-      #     echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
-      #     echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
-      #     echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
+        - name: Load all secrets dynamically
+            run: |
+              echo "Loading all GitHub secrets and variables dynamically..."
+
+              # Loop through all secrets and export them
+              for secret in $(printenv | grep -oP 'GITHUB_.*' | cut -d= -f1); do
+                echo "Exporting secret: $secret"
+                echo "$secret=${{ secrets[$secret] }}" >> $GITHUB_ENV
+              done
+
+              # Loop through all variables and export them
+              for var in $(printenv | grep -oP 'VAR_.*' | cut -d= -f1); do
+                echo "Exporting variable: $var"
+                echo "$var=${{ vars[$var] }}" >> $GITHUB_ENV
+              done
 
       - name: Verify Loaded Variables
         run: |
