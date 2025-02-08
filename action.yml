@@ -12,10 +12,23 @@ runs:
         echo "Loading GitHub Secrets..."
 
         # Loop through all environment variables starting with 'GITHUB_' and load them securely
-
+        for secret in $(printenv | grep -oP 'GITHUB_.*' | cut -d= -f1); do
+          # Securely load the secret value into GitHub Actions environment
+          secret_value="${{ secrets[${secret}] }}"
+          echo "$secret=$secret_value" >> $GITHUB_ENV
+        done
 
         # Loop through repository variables starting with 'VAR_' and load them securely
         for var in $(printenv | grep -oP '^VAR_.*' | cut -d= -f1); do
           # Securely load the variable value into GitHub Actions environment
-          echo "$var=${{ vars.${var} }}" >> $GITHUB_ENV
+          var_value="${{ vars[${var}] }}"
+          echo "$var=$var_value" >> $GITHUB_ENV
         done
+
+      shell: bash  # Use bash as the shell for running the script
+
+    - name: Check loaded environment variables
+      run: |
+        echo "Checking environment variables..."
+        printenv
+      shell: bash  # Use bash as the shell for running the script
