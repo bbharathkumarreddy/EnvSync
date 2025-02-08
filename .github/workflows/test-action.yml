@@ -27,6 +27,8 @@ jobs:
           echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
           echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
           echo "AAA=${{ vars }}" >> $GITHUB_ENV
+          echo "ssss=${{ AAA.MY_ENV }}"
+          echo "llll=${{ vars.MY_ENV }}"
 
       # - name: Load all secrets dynamically
       #   run: |
