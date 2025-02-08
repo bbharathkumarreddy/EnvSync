@@ -4,23 +4,8 @@ description: "A tool to securely sync and load all environment variables and sec
 runs:
   using: "composite"
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-      - name: Export GitHub Secrets and Variables
-        run: |
-          echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
-          echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
-          echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
-
-      - name: Verify Loaded Variables
-        run: |
-          echo "The loaded environment variables are"
-          printenv  # This will display all environment variables to verify they were set
-
-    - name: Verify Loaded Variables
+    - name: Export GitHub Secrets and Variables
       run: |
-        echo "The loaded environment variables are:"
-        printenv  # This will display all environment variables to verify they were set
-
-      shell: bash
+        echo "TEST_SECRET=${{ secrets.TEST_SECRET }}" >> $GITHUB_ENV
+        echo "TEST_USERNAME=${{ secrets.TEST_USERNAME }}" >> $GITHUB_ENV
+        echo "MY_ENV=${{ vars.MY_ENV }}" >> $GITHUB_ENV
